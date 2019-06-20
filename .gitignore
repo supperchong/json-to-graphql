@@ -1,0 +1,9 @@
+.idea/
+.vscode/
+**/node_modules/
+yarn-error.log
+node_modules/
+.history
+run
+logs
+coverage

@@ -1,0 +1,25 @@
+{
+  "name": "json-to-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@humanwhocodes/momoa": "^0.2.0",
+    "pretty-object-string": "^1.0.6",
+    "recast": "^0.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supperchong/json-to-graphql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supperchong/json-to-graphql/issues"
+  },
+  "homepage": "https://github.com/supperchong/json-to-graphql#readme"
+}
