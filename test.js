@@ -1,6 +1,6 @@
-const { parse } = require("@humanwhocodes/momoa");
-const convertJsToJson=require('./lib/index')
-// const { parse, print } = require("recast");
+// const { parse } = require("@humanwhocodes/momoa");
+// const convertJsToJson=require('./lib/index')
+const { parse, print } = require("recast");
 
 const some_json_string=`
 {
@@ -24,27 +24,86 @@ const some_json_string=`
 }
 `
 
-const jsonAST=parse(convertJsToJson(some_json_string),{comments: true,tokens:true })
-
+const ast=parse(`let a=${some_json_string}`)
 const types=[]
-function getGraphqlType(obj){
-  const type=obj.type
-    switch(type){
-      case 'Object':{
-
-      }
-      case 'String':{
-
-      }
-      case 'Number':{
-
-      }
-      case 'Null':{
-
+function  traverseJsonAst(node,name){
+	const type=node.type
+	const graphqlType={
+		type:upper(name),
+		value:[]
+	}
+	switch(type){
+		case "ObjectExpression":{
+			const properties=node.properties
+			for(const property of properties){
+				const key=getRaw(property.key)
+				graphqlType.value.push({
+					key,
+					value:getGraphqlType(property.value,key),
+					comments:getRaw(property.comments)
+				})
 			}
-			case 'Boolean':{
+			break
+		}
+	}
+	types.push(graphqlType)
 
-			}
-    }
 }
-getGraphqlType(jsonAST.body)
+
+function getJsonAst(ast){
+	return ast.program.body[0].declarations[0].init
+}
+function getRaw(node){
+	if(!node){
+		return null
+	}
+	if(Array.isArray(node)){
+		return node.map(v=>getRaw(v))
+	}
+	return node.value
+}
+function upper(word){
+	return word.replace(/^./,_=>_.toUpperCase())
+}
+function getGraphqlType(node,key){
+	switch(node.type){
+		case 'Literal':{
+			const originType=typeof getRaw(node)
+			switch(originType){
+				case 'number':{
+					if(Number.isInteger){
+						return 'Int'
+					}else{
+						return 'Float'
+					}
+				}
+				case 'boolean':{
+					return 'Boolean'
+				}
+				case 'object':{
+					return 'Any'
+				}
+				case 'string':{
+					return 'String'
+				}
+			}
+		}
+		case 'ObjectExpression':{
+			traverseJsonAst(node,key)
+			return upper(key)
+		}
+		case 'ArrayExpression':{
+			traverseJsonAst(node.elements[0],key)
+			return '['+upper(key)+']'
+		}
+	}
+}
+
+traverseJsonAst(getJsonAst(ast),'Root')
+function generateGraphqlSchema(){
+	let schema=''
+	//Todo
+	// for(const {type,} of types){
+
+	// }
+}
