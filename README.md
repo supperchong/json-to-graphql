@@ -1,6 +1,6 @@
-# json-to-graphql
+# js-to-graphql-schema
 ## About
- `json-to-graphql`可以将json或javascript对象转化成graphql schema,写这个库的起因是因为要将restful接口重构为graphql接口,`json-to-graphql`可以根据返回的数据结构自动生成类型定义.
+ `js-to-graphql-schema`可以将json或javascript对象转化成graphql schema,写这个库的起因是因为要将restful接口重构为graphql接口,`js-to-graphql-schema`可以根据返回的数据结构自动生成类型定义.
 ## feature
 - support any available javascript object string
 - support comment
@@ -32,11 +32,11 @@ type People {
 
 ## install
 ```sh
-$ npm install json-to-graphql-schema
+$ npm install js-to-graphql-schema
 ```
 ## Usage
 ```js
-const generateGraphqlSchema=require('json-to-graphql-schema')
+const generateGraphqlSchema=require('js-to-graphql-schema')
 //available javascript object literal
 const str=`
 {
