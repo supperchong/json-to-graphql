@@ -1,11 +1,9 @@
 {
-  "name": "json-to-graphql",
-  "version": "1.0.0",
+  "name": "json-to-graphql-schema",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@humanwhocodes/momoa": "^0.2.0",
-    "pretty-object-string": "^1.0.6",
     "recast": "^0.18.1"
   },
   "devDependencies": {},
